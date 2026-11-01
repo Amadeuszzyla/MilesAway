@@ -127,18 +127,24 @@ Każdy odcinek zachowuje własny środek transportu, geometrię i dystans.
 
 ```mermaid
 flowchart TD
-    Mobile["Aplikacja Flutter"] -->|"HTTPS / JSON"| API["API Laravel"]
-    Browser["Przeglądarka administratora"] --> Admin["Panel Filament"]
-    API --> Domain["Logika domenowa i autoryzacja"]
+    Mobile["Flutter"] -->|HTTPS / JSON| API["API Laravel"]
+    Browser["Administrator"] --> Admin["Filament"]
+    API --> Domain["Logika aplikacji"]
     Admin --> Domain
     Domain --> Database["PostgreSQL 16"]
-    Domain --> Services["Geokodowanie i routing"]
+    Domain --> Services["Usługi mapowe"]
 ```
 
-backend/    # Laravel: REST API
-mobile/     # Aplikacja mobilna Flutter
-docker/     # Konfiguracja środowiska kontenerowego (Nginx, PHP, Node)
-docs/       # Dokumentacja projektu
+Usługi mapowe obejmują geokodowanie i wyznaczanie tras.
+
+## Struktura projektu
+
+```text
+backend/  # Laravel: REST API i panel Filament
+mobile/   # Aplikacja mobilna Flutter
+docker/   # Konfiguracja środowiska kontenerowego
+docs/     # Dokumentacja projektu
+```
 
 ### Aplikacja mobilna
 
