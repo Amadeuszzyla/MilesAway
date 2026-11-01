@@ -191,6 +191,11 @@ Planowane ekrany:
 - profil i ustawienia prywatności,
 - przeglądanie publicznych profili i ich podróży.
 
+## Podgląd interfejsu
+
+Projekt interfejsu MilesAway przygotowany w Figmie.
+Przedstawione ekrany są makietami i mogą różnić się od aktualnej implementacji.
+[Zobacz projekt w Figmie](https://www.figma.com/proto/nSX2TDl5FtEVm8SDGntw0F/Untitled?node-id=1-3&t=BXHsufh2riFxy2p7-1&scaling=contain&content-scaling=responsive&page-id=0%3A1&starting-point-node-id=1%3A3)
 ## Uruchomienie projektu
 
 ### Konfiguracja i sekrety
@@ -259,22 +264,12 @@ Zmiany są przygotowywane na osobnych gałęziach i scalane przez pull request p
 
 Szczegółowe zasady opisano w [CONTRIBUTING.md](CONTRIBUTING.md).
 
-### Wymagania organizacyjne zajęć
-
-- Projekt jest wykonywany w tych samych grupach co projekt z Programowania urządzeń mobilnych.
-- Skład grupy i linki do publicznych repozytoriów należy zgłosić najpóźniej do drugich zajęć projektowych.
-- Zgodnie z przekazanymi zasadami spóźnione zgłoszenie skutkuje modyfikatorem −0,5 do oceny końcowej projektu.
-- Lista zadań obejmująca wymagania funkcjonalne i przypisane osoby powinna być gotowa przed czwartymi zajęciami.
-
-Dokładne daty należy ustalić na podstawie harmonogramu grupy.
-
 ## Dokumentacja
 
 Dokumentacja przygotowana w pakiecie projektu:
 
 - [Zasady współpracy](CONTRIBUTING.md)
 - [Backlog GitHub Issues](docs/ISSUES.md)
-- [Decyzje i reguły biznesowe](docs/DECISIONS.md)
 - [Dokumentacja API](docs/API.md)
 - [Scenariusze odbioru](docs/ACCEPTANCE.md)
 - [Źródła i podstawa opracowania](docs/SOURCES.md)
@@ -303,9 +298,6 @@ Zdjęcia, osobne wpisy wspomnień, obserwowanie użytkowników, polubienia, powi
 | Kyril Ryab | [@KirilRyab](https://github.com/KirilRyab) | Aplikacja mobilna |
 
 ## Licencja
-Wykorzystane biblioteki, dane geograficzne i usługi zewnętrzne podlegają własnym licencjom oraz warunkom użytkowania. W aplikacji należy zachować wymagane informacje o autorstwie i źródłach danych.
-Współpraca
-Zasady współpracy opisuje CONTRIBUTING.md, procedura realizacji zadań jest w TASK_ins.md, a backlog w TASK.md.
 
-Licencja
-Projekt udostępniany na licencji MIT. Szczegóły w pliku LICENSE.
+- Wykorzystane biblioteki, dane geograficzne i usługi zewnętrzne podlegają własnym licencjom oraz warunkom użytkowania. 
+- W aplikacji należy zachować wymagane informacje o autorstwie i źródłach danych.
