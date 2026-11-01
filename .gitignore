@@ -1,31 +1,197 @@
-/vendor/
+# =============================================================================
+# Dependencies
+# =============================================================================
 node_modules/
-npm-debug.log
-yarn-error.log
+vendor/
 
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
+# Pliki blokady zależności pozostają w repozytorium:
+# composer.lock, package-lock.json, pubspec.lock
 
-# Laravel 5 & Lumen specific
-public/storage
-public/hot
-
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
-
-storage/*.key
+# =============================================================================
+# Environment files & Secrets
+# =============================================================================
 .env
-Homestead.yaml
-Homestead.json
-/.vagrant
-.phpunit.result.cache
-/.phpunit.cache
+.env.*
+!.env.example
+!.env.*.example
 
-/public/build
-/storage/pail
-.env.backup
-.env.production
-.phpactor.json
 auth.json
+
+# Klucze podpisujące aplikację Android
+*.jks
+*.keystore
+/mobile/android/key.properties
+
+# Certyfikaty i profile podpisujące aplikację iOS
+*.p12
+*.p8
+*.mobileprovision
+
+# =============================================================================
+# Laravel / Filament — Backend
+# =============================================================================
+/backend/bootstrap/cache/*
+!/backend/bootstrap/cache/.gitignore
+
+/backend/storage/*.key
+/backend/storage/pail/
+
+/backend/storage/framework/cache/*
+!/backend/storage/framework/cache/.gitignore
+
+/backend/storage/framework/sessions/*
+!/backend/storage/framework/sessions/.gitignore
+
+/backend/storage/framework/testing/*
+!/backend/storage/framework/testing/.gitignore
+
+/backend/storage/framework/views/*
+!/backend/storage/framework/views/.gitignore
+
+/backend/storage/logs/*
+!/backend/storage/logs/.gitignore
+
+/backend/storage/app/private/*
+!/backend/storage/app/private/.gitignore
+
+/backend/storage/app/public/*
+!/backend/storage/app/public/.gitignore
+
+/backend/public/storage
+/backend/public/hot
+/backend/public/build/
+
+# =============================================================================
+# Laravel — Frontend asset tooling
+# =============================================================================
+*.tsbuildinfo
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =============================================================================
+# Flutter / Dart
+# =============================================================================
+/mobile/.dart_tool/
+/mobile/.pub/
+/mobile/.pub-cache/
+/mobile/.packages
+/mobile/.flutter-plugins
+/mobile/.flutter-plugins-dependencies
+
+/mobile/build/
+/mobile/coverage/
+/mobile/doc/api/
+
+# Symbole i mapy zaciemniania kodu
+/mobile/app.*.symbols
+/mobile/app.*.map.json
+
+# =============================================================================
+# Flutter — Android
+# =============================================================================
+/mobile/android/.gradle/
+/mobile/android/.kotlin/
+/mobile/android/local.properties
+/mobile/android/captures/
+/mobile/android/build/
+/mobile/android/app/build/
+/mobile/android/app/debug/
+/mobile/android/app/profile/
+/mobile/android/app/release/
+
+# =============================================================================
+# Flutter — iOS / macOS
+# =============================================================================
+/mobile/ios/Pods/
+/mobile/ios/.symlinks/
+/mobile/ios/Flutter/ephemeral/
+/mobile/ios/Flutter/App.framework/
+/mobile/ios/Flutter/Flutter.framework/
+/mobile/ios/Flutter/Flutter.podspec
+/mobile/ios/Flutter/Generated.xcconfig
+/mobile/ios/Flutter/flutter_export_environment.sh
+/mobile/ios/Runner/GeneratedPluginRegistrant.*
+
+/mobile/macos/Pods/
+/mobile/macos/.symlinks/
+/mobile/macos/Flutter/ephemeral/
+
+# Lokalne ustawienia Xcode
+**/xcuserdata/
+*.xcuserstate
+**/DerivedData/
+
+# =============================================================================
+# Flutter — Windows / Linux
+# =============================================================================
+/mobile/windows/flutter/ephemeral/
+/mobile/linux/flutter/ephemeral/
+
+# =============================================================================
+# PHP, Testing & Local Databases
+# =============================================================================
+.phpunit.cache/
+.phpunit.result.cache
+.pest/
+coverage/
+.phpactor.json
+phpstan.neon.local
+phpunit.xml.local
+
+*.sqlite
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
+
+*.log
+error_log
+
+# Lokalne kopie baz danych
+/backups/
+/dumps/
+
+# =============================================================================
+# IDE — PhpStorm / Android Studio / IntelliJ
+# =============================================================================
+.idea/
+*.iml
+
+# =============================================================================
+# VS Code
+# =============================================================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# =============================================================================
+# Docker — Local overrides
+# =============================================================================
+docker-compose.override.yml
+docker-compose.override.yaml
+compose.override.yml
+compose.override.yaml
+
+# =============================================================================
+# Temporary files
+# =============================================================================
+*.swp
+*.swo
+*~
+*.orig
+
+# =============================================================================
+# OS generated files
+# =============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
