@@ -1,79 +1,195 @@
-MilesAway, dziennik podróży
-Projekt aplikacji turystycznej będącej osobistym dziennikiem podróży. Docelowo użytkownik będzie dokumentować odbyte podróże, oglądać je na interaktywnej mapie i przeglądać statystyki z całej historii lub wybranego roku.
+# MilesAway, dziennik podróży
+**Projekt aplikacji turystycznej będącej osobistym dziennikiem podróży. Docelowo użytkownik będzie dokumentować odbyte podróże, oglądać je na interaktywnej mapie i przeglądać statystyki z całej historii lub wybranego roku.**
 
-Po kilku latach korzystania z aplikacji można otworzyć mapę i zobaczyć wszystkie podróże, odwiedzone kraje oraz statystyki pokazujące, jak podróżowaliśmy na przestrzeni lat.
+MilesAway to projekt aplikacji turystycznej umożliwiającej dokumentowanie odbytych podróży, prezentowanie tras na interaktywnej mapie oraz przeglądanie statystyk podróżniczych.
 
-Funkcjonalności
-Konta użytkowników
-Rejestracja, logowanie i wylogowywanie
-Edycja podstawowych danych profilu
-Przełączanie Profilu na publiczny lub prywatny
-Przeglądanie podróży innych użytkowników (tylko profile publiczne)
-Zarządzanie podróżami
-Dodawanie, edycja i usuwanie podróży
-Nazwa, data lub zakres dat, opis
-Dowolna liczba punktów i odcinków w podróży
-Ustalanie kolejności miejsc i środka transportu dla każdego odcinka
-Przykład podróży:
+Celem aplikacji jest stworzenie miejsca, w którym użytkownik może zobaczyć, gdzie był, jakie państwa odwiedził i jakimi środkami transportu podróżował na przestrzeni lat.
 
-Legnica → Berlin (samochód)
-Berlin → Majorka (samolot)
-Zwiedzanie Majorki, kilka punktów (samochód)
-Majorka → Berlin (samolot)
-Berlin → Legnica (samochód)
-Środki transportu (planowane)
-Transport	Prezentacja na mapie	Obliczanie dystansu
-Samochód	Trasa po rzeczywistej sieci dróg	Z API wyznaczającego trasy
-Samolot	Łuk między punktami	Odległość po kuli ziemskiej
-Pociąg	Linia prosta	Odległość w linii prostej
-Inne	Uproszczone połączenie	Odległość w linii prostej
-Interaktywna mapa
-Pojedyncza podróż z punktami i odcinkami
-Rozróżnienie transportu kolorami, ikonami lub stylem linii
-Wszystkie podróże użytkownika na jednej mapie
-Automatyczne oznaczanie odwiedzonych państw na podstawie zapisanych podróży
-Przybliżanie mapy i podgląd szczegółów tras
-Statystyki
-Dla całej historii oraz dla wybranego roku kalendarzowego:
+System obejmuje:
 
-liczba odbytych podróży
-liczba i lista odwiedzonych państw (wyróżnione na mapie)
-łączna liczba przebytych kilometrów
-dystans według środka transportu
-liczba odwiedzonych miejsc
-Architektura
+- aplikację mobilną napisaną we Flutterze,
+- API przygotowane w Laravel,
+- webowy panel administracyjny oparty na Filament,
+- bazę danych PostgreSQL.
+
+## Cel projektu
+
+MilesAway ma pełnić funkcję osobistego dziennika podróży.
+
+Użytkownik powinien mieć możliwość zapisania podróży składającej się z wielu miejsc i odcinków, określenia transportu dla każdego odcinka oraz późniejszego przeglądania swojej historii na mapie.
+
+Najważniejszym rezultatem projektu jest działająca aplikacja z czytelnym interfejsem, wiarygodną prezentacją tras i statystykami obejmującymi wiele lat podróżowania.
+
+Projekt API i panelu administracyjnego jest powiązany z aplikacją realizowaną w ramach przedmiotu **Programowanie urządzeń mobilnych**.
+
+## Funkcjonalności
+### Konta użytkowników
+
+- Rejestracja, logowanie i wylogowywanie.
+- Edycja podstawowych danych profilu.
+- Ustawianie profilu jako publiczny lub prywatny.
+- Przeglądanie podróży innych użytkowników, jeśli ich profile są publiczne.
+- Kontrola dostępu do danych po stronie API.
+
+### Zarządzanie podróżami
+
+- Dodawanie, przeglądanie, edytowanie i usuwanie podróży.
+- Zapisywanie nazwy, daty lub zakresu dat oraz opcjonalnego opisu.
+- Dodawanie wielu punktów do jednej podróży.
+- Określanie kolejności odwiedzanych miejsc.
+- Wybieranie środka transportu osobno dla każdego odcinka.
+- Obsługa powrotów do wcześniej odwiedzonych miejsc.
+
+### Interaktywna mapa
+
+- Wyświetlanie pojedynczej podróży wraz z punktami i odcinkami.
+- Wyświetlanie wszystkich podróży użytkownika na jednej mapie.
+- Rozróżnianie transportu za pomocą kolorów, ikon lub stylów linii.
+- Przybliżanie mapy i przeglądanie szczegółów tras.
+- Automatyczne rozpoznawanie odwiedzonych państw na podstawie zapisanych podróży.
+- Wyróżnianie odwiedzonych państw z wykorzystaniem danych ich granic.
+
+### Statystyki podróżnicze
+
+Statystyki obejmują **całą historię podróży** lub **wybrany rok kalendarzowy**:
+
+- liczbę odbytych podróży,
+- liczbę i listę odwiedzonych państw,
+- liczbę odwiedzonych miejsc,
+- łączny przebyty dystans,
+- dystans pokonany poszczególnymi środkami transportu.
+
+Szczegółowe zasady obliczeń, w tym sposób uwzględniania podróży na przełomie roku i powtarzających się miejsc, wymagają wspólnego zatwierdzenia przez zespół.
+
+### Panel administracyjny
+
+Webowy panel Filament służy do zarządzania danymi aplikacji.
+
+Proponowany zakres obejmuje:
+
+- logowanie administratora,
+- przeglądanie i wyszukiwanie użytkowników,
+- zarządzanie dozwolonymi danymi użytkowników,
+- przeglądanie i zarządzanie podróżami,
+- kontrolę dostępu do operacji administracyjnych.
+
+Szczegółowe uprawnienia administratora, w tym dostęp do prywatnych podróży, wymagają zatwierdzenia. Zwykłe konto użytkownika nie przyznaje dostępu do panelu.
+
+## Środki transportu
+
+| Środek transportu | Sposób prezentacji |
+| --- | --- |
+| Samochód | Trasa wyznaczana po rzeczywistej sieci dróg. |
+| Samolot | Bezpośrednie połączenie między punktami przedstawione na mapie jako łuk. |
+| Pociąg | Połączenie przedstawione linią prostą. |
+| Inne | Uproszczone połączenie między punktami. |
+
+Transport jest przypisywany do **odcinka**, a nie do całej podróży.
+
+Dystans samochodowy powinien pochodzić z silnika wyznaczania tras. Dla pozostałych środków transportu proponowane jest obliczanie odległości geodezyjnej i oznaczanie jej jako przybliżonej.
+
+Brak możliwości wyznaczenia trasy samochodowej powinien być jawnie komunikowany. Linia prosta nie może być przedstawiana jako poprawnie wyznaczona trasa drogowa.
+
+## Przykładowa podróż
+
+| Kolejność | Odcinek | Transport |
+| --- | --- | --- |
+| 1 | Legnica → Berlin | Samochód |
+| 2 | Berlin → Majorka | Samolot |
+| 3 | Zwiedzanie Majorki — kilka punktów | Samochód |
+| 4 | Majorka → Berlin | Samolot |
+| 5 | Berlin → Legnica | Samochód |
+
+Każdy odcinek zachowuje własny środek transportu, geometrię i dystans.
+
+## Stack technologiczny
+
+| Obszar | Technologia | Status |
+| --- | --- | --- |
+| Backend | PHP 8.3+, Laravel 12 | Wybrane |
+| Uwierzytelnianie API | Laravel Sanctum | Wybrane |
+| Panel administracyjny | Laravel Filament | Wybrane; wersja do ustalenia |
+| Aplikacja mobilna | Flutter + Dart | Wybrane |
+| Środowisko mobilne | Android Studio | Wybrane |
+| Baza danych | PostgreSQL 16 | Wybrane |
+| Konteneryzacja | Docker, Docker Compose | Wybrane |
+| Mapa mobilna | Pakiet mapowy kompatybilny z Flutterem | Do ustalenia |
+| Wyznaczanie tras | OpenRouteService lub OSRM | Do ustalenia |
+| Geokodowanie | Nominatim, Photon lub inny dostawca | Do ustalenia |
+| Granice państw | GeoJSON, np. Natural Earth | Zbiór i wersja do ustalenia |
+| Testy backendu | PHPUnit | Wybrane |
+| Testy mobilne | `flutter_test`, `integration_test` | Propozycja |
+| Formatowanie PHP | Laravel Pint | Wybrane |
+| Jakość kodu Dart | `dart format`, `flutter analyze` | Propozycja |
+| CI/CD | GitHub Actions | Wybrane narzędzie; workflow do przygotowania |
+
+## Architektura
+
+```mermaid
 flowchart TD
-    M["Flutter / Dart"] -->|"HTTPS / JSON / token Sanctum"| A["Laravel API"]
-    W["Przeglądarka administratora"] -->|"Sesja webowa"| F["Panel Filament"]
-    A --> S["Reguły domenowe i autoryzacja"]
-    F --> S
-    S --> D["PostgreSQL 16"]
-    S --> E["Geokodowanie i routing"]
-Aplikacja składa się z backendu Laravel oraz mobilnej aplikacji Flutter. Docelowo aplikacja mobilna będzie korzystać ze wspólnego REST API (/api/v1).
+    Mobile["Aplikacja Flutter"] -->|"HTTPS / JSON"| API["API Laravel"]
+    Browser["Przeglądarka administratora"] --> Admin["Panel Filament"]
+    API --> Domain["Logika domenowa i autoryzacja"]
+    Admin --> Domain
+    Domain --> Database["PostgreSQL 16"]
+    Domain --> Services["Geokodowanie i routing"]
+```
 
 backend/    # Laravel: REST API
 mobile/     # Aplikacja mobilna Flutter
 docker/     # Konfiguracja środowiska kontenerowego (Nginx, PHP, Node)
 docs/       # Dokumentacja projektu
 
-Stack technologiczny
-| Warstwa | Technologia |
-| --- | --- |
-| Backend / API | PHP 8.3+, Laravel 12 |
-| Uwierzytelnianie API | Laravel Sanctum |
-| Panel administracyjny | Laravel Filament; wersja do przypięcia po sprawdzeniu zgodności |
-| Aplikacja mobilna | Flutter + Dart, środowisko Android Studio |
-| Baza danych | PostgreSQL 16 |
-| Kontenery | Docker, Docker Compose |
-| Mapa webowa, jeśli potrzebna w panelu | Leaflet lub MapLibre GL JS — do ustalenia |
-| Mapa mobilna | Pakiet Flutter do ustalenia, np. integracja MapLibre; decyzja oddzielna od biblioteki JavaScript |
-| Routing samochodowy | OpenRouteService lub OSRM — do ustalenia |
-| Geokodowanie | Nominatim, Photon lub inny dostawca — do ustalenia |
-| Granice państw | GeoJSON, np. Natural Earth; zbiór i wersja do ustalenia |
-| Testy backendu | PHPUnit |
-| Testy mobilne | Propozycja: flutter_test oraz integration_test; decyzja zespołu |
-| Jakość kodu | Laravel Pint; propozycja dla Fluttera: dart format i flutter analyze |
-| Automatyzacja | GitHub Actions; CI do przygotowania, wdrożenie CD po wyborze hostingu |
+### Aplikacja mobilna
+
+Odpowiada za interfejs użytkownika, formularze, prezentację map i statystyk oraz komunikację z API.
+
+### API Laravel
+
+Odpowiada za:
+
+- uwierzytelnianie i autoryzację,
+- walidację danych,
+- zarządzanie profilami i podróżami,
+- egzekwowanie prywatności,
+- integrację z usługami zewnętrznymi,
+- obliczanie statystyk.
+
+Proponowany mechanizm uwierzytelniania aplikacji mobilnej to tokeny Laravel Sanctum.
+
+### Panel Filament
+
+Zapewnia webowy interfejs administracyjny. Powinien korzystać ze wspólnych reguł domenowych, aby zmiany administracyjne poprawnie aktualizowały trasy i statystyki.
+
+Proponowany mechanizm logowania do panelu to sesja webowa.
+
+### PostgreSQL
+
+Przechowuje dane użytkowników, podróży, punktów, odcinków oraz informacje potrzebne do prezentowania map i statystyk.
+
+## Interfejs użytkownika
+
+Kierunek wizualny MilesAway to nowoczesny flat design z prostymi ilustracjami i warstwowym krajobrazem **paper cut-out**.
+
+Założenia stylistyczne:
+
+- ciepła paleta beżu, brązu, złota i leśnej zieleni,
+- zaokrąglone karty,
+- subtelne cienie,
+- delikatna faktura,
+- czytelne formularze i prosta nawigacja.
+
+Planowane ekrany:
+
+- logowanie i rejestracja,
+- ekran główny,
+- lista podróży,
+- dodawanie i edycja podróży,
+- szczegóły podróży z mapą,
+- mapa wszystkich podróży,
+- statystyki,
+- profil i ustawienia prywatności,
+- przeglądanie publicznych profili i ich podróży.
 
 Wymagania
 Docker Desktop (z obsługą Docker Compose v2)
