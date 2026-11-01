@@ -202,73 +202,349 @@ Planowane ekrany:
 Projekt interfejsu MilesAway przygotowany w Figmie.
 Przedstawione ekrany są makietami i mogą różnić się od aktualnej implementacji.
 [Zobacz projekt w Figmie](https://www.figma.com/proto/nSX2TDl5FtEVm8SDGntw0F/Untitled?node-id=1-3&t=BXHsufh2riFxy2p7-1&scaling=contain&content-scaling=responsive&page-id=0%3A1&starting-point-node-id=1%3A3)
-## Uruchomienie projektu
 
-### Konfiguracja i sekrety
+## Wymagania
 
-Nie należy umieszczać w repozytorium:
+### Backend i panel administracyjny
 
-- plików `.env` zawierających dane dostępowe,
-- haseł i tokenów,
-- prywatnych kluczy usług zewnętrznych,
-- rzeczywistych danych użytkowników,
-- kopii produkcyjnej bazy danych.
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) z Docker Compose v2 — Windows/macOS.
+- Docker Engine i Docker Compose v2 — Linux lub serwer VPS.
+- Git.
 
-Plik `.env.example` powinien zawierać nazwy wymaganych zmiennych i bezpieczne wartości przykładowe.
+Do uruchomienia backendu bez kontenerów potrzebne są również:
 
-## Testy i jakość kodu
+- PHP 8.3+ z rozszerzeniami wymaganymi przez projekt,
+- Composer,
+- PostgreSQL 16,
+- Node.js i npm, jeżeli projekt wymaga budowania zasobów panelu.
 
-Poniższe polecenia są przewidziane do użycia po utworzeniu projektów i instalacji zależności.
-
-### Backend
-
-Uruchamiane z katalogu aplikacji Laravel lub we właściwym kontenerze:
-
-```bash
-php artisan test
-./vendor/bin/pint --test
-```
+Wersje zależności należy dopasować do plików `composer.json` i `package.json`.
 
 ### Aplikacja mobilna
 
-Uruchamiane z katalogu projektu Flutter:
+- Flutter SDK wraz z Dart — wersja zgodna z projektem.
+- Android Studio z Android SDK.
+- Emulator Android lub urządzenie z włączonym debugowaniem USB.
+
+Aplikację mobilną uruchamiamy przez Flutter na komputerze deweloperskim. Docker obsługuje backend, panel administracyjny i bazę danych.
+
+## Uruchomienie lokalne — backend i panel
+
+> Poniższa instrukcja zakłada usługi Docker o nazwach `backend` i `postgres`. Przed użyciem należy potwierdzić ich nazwy, porty i sposób przekazywania konfiguracji w `compose.yaml`.
+
+### 1. Sklonowanie repozytorium
+
+Zastąp `URL_REPOZYTORIUM` właściwym adresem:
+
+```bash
+git clone URL_REPOZYTORIUM MilesAway
+cd MilesAway
+```
+
+### 2. Konfiguracja zmiennych środowiskowych
+
+Jeżeli repozytorium zawiera osobne pliki przykładowe dla Docker Compose i Laravel:
+
+```bash
+cp .env.example .env
+cp backend/.env.example backend/.env
+```
+
+Polecenia wykonaj przy pierwszej konfiguracji. Nie nadpisuj istniejących plików z własnymi ustawieniami.
+
+- Główny `.env` dostarcza wartości wykorzystywane przez `compose.yaml`.
+- `backend/.env` zawiera konfigurację aplikacji Laravel.
+- Dane bazy użyte do uruchomienia PostgreSQL muszą odpowiadać danym połączenia Laravel.
+
+Nie kopiuj automatycznie całego głównego `.env` do `backend/.env` — pliki mogą zawierać różne ustawienia.
+
+Przykładowa konfiguracja Laravel dla środowiska Docker:
+
+```dotenv
+APP_NAME=MilesAway
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=pgsql
+DB_HOST=postgres
+DB_PORT=5432
+DB_DATABASE=milesaway
+DB_USERNAME=milesaway_user
+DB_PASSWORD=UZUPELNIJ_LOKALNE_HASLO
+```
+
+Przed uruchomieniem ustaw własne, niepuste hasło i zgodne dane w konfiguracji Docker Compose.
+
+`DB_HOST=postgres` oznacza nazwę usługi bazy w sieci Docker. Nie jest to adres używany do połączenia z bazą z komputera gospodarza.
+
+### 3. Budowa i uruchomienie kontenerów
+
+Z katalogu głównego repozytorium:
+
+```bash
+docker compose up -d --build
+```
+
+Sprawdź stan usług:
+
+```bash
+docker compose ps
+```
+
+### 4. Instalacja zależności backendu
+
+Jeśli zależności nie są instalowane podczas budowania obrazu:
+
+```bash
+docker compose exec backend composer install
+```
+
+### 5. Wygenerowanie klucza aplikacji
+
+Przy pierwszym uruchomieniu, jeśli `APP_KEY` w `backend/.env` jest pusty:
+
+```bash
+docker compose exec backend php artisan key:generate
+```
+
+Nie generuj ponownie istniejącego klucza przy każdym uruchomieniu.
+
+Wyczyść zapamiętaną konfigurację:
+
+```bash
+docker compose exec backend php artisan config:clear
+```
+
+Jeśli `compose.yaml` przekazuje `APP_KEY` bezpośrednio jako zmienną środowiskową, zaktualizuj również jej źródło i odtwórz usługę:
+
+```bash
+docker compose up -d --force-recreate backend
+```
+
+Samo odtworzenie kontenera nie poprawi klucza, jeżeli Compose nadal przekazuje pustą lub starą wartość.
+
+### 6. Przygotowanie bazy danych
+
+Uruchom migracje:
+
+```bash
+docker compose exec backend php artisan migrate
+```
+
+Jeżeli projekt zawiera seedery z lokalnymi danymi demonstracyjnymi:
+
+```bash
+docker compose exec backend php artisan db:seed
+```
+
+Seedery uruchamiaj świadomie, zgodnie z ich przeznaczeniem. Dane demonstracyjne nie powinny zawierać rzeczywistych danych użytkowników.
+
+### 7. Konto administratora
+
+Po zainstalowaniu i skonfigurowaniu panelu Filament:
+
+```bash
+docker compose exec backend php artisan make:filament-user
+```
+
+Dostęp utworzonego użytkownika musi być zgodny z przyjętą w projekcie kontrolą uprawnień administratora.
+
+Nie zapisuj hasła administratora w repozytorium ani w README.
+
+## Uruchomienie aplikacji mobilnej
+
+W osobnym terminalu przejdź do katalogu aplikacji:
+
+```bash
+cd mobile
+```
+
+Sprawdź środowisko:
+
+```bash
+flutter doctor
+```
+
+Pobierz zależności:
+
+```bash
+flutter pub get
+```
+
+Uruchom emulator Android lub podłącz telefon, a następnie sprawdź dostępne urządzenia:
+
+```bash
+flutter devices
+```
+
+### Adres API
+
+Adres backendu zależy od urządzenia:
+
+| Środowisko | Przykładowy adres API |
+| --- | --- |
+| Standardowy emulator Android Studio | `http://10.0.2.2:8000/api/v1` |
+| Telefon w tej samej sieci | `http://ADRES_IP_KOMPUTERA:8000/api/v1` |
+| Środowisko na VPS | `https://DOMENA_API/api/v1` |
+
+Przykłady zakładają port `8000` oraz prefiks `/api/v1`. Dopasuj je do rzeczywistej konfiguracji projektu.
+
+Proponowany sposób przekazywania adresu:
+
+```bash
+flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8000/api/v1
+```
+
+To polecenie wymaga, aby klient API w kodzie Flutter odczytywał `API_BASE_URL`, np. przez `String.fromEnvironment`. Samo przekazanie parametru nie konfiguruje automatycznie klienta HTTP.
+
+Dla telefonu backend musi być dostępny w sieci lokalnej, a port dopuszczony przez zaporę. Lokalne połączenia HTTP mogą wymagać konfiguracji Androida ograniczonej do wariantu debug. Środowisko udostępniane użytkownikom powinno korzystać z HTTPS.
+
+## Dostęp do systemu
+
+Przy założonej konfiguracji lokalnej:
+
+| Element | Adres lub sposób uruchomienia |
+| --- | --- |
+| Backend | `http://localhost:8000` |
+| API | `http://localhost:8000/api/v1` — jeśli taki prefiks zdefiniowano |
+| Panel Filament | `http://localhost:8000/admin` — jeśli skonfigurowano ścieżkę `/admin` |
+| Aplikacja mobilna | Emulator lub telefon, uruchomienie przez Flutter |
+| PostgreSQL z komputera | `localhost:5432` — tylko jeśli port został wystawiony w Compose |
+| PostgreSQL z backendu | `postgres:5432` |
+
+MilesAway nie wymaga osobnego frontendu Vue/Vite. Panel administracyjny działa w aplikacji Laravel, a interfejs użytkownika jest aplikacją Flutter.
+
+## Przydatne polecenia Docker
+
+Wykonuj z katalogu zawierającego `compose.yaml`.
+
+### Zatrzymanie usług
+
+```bash
+docker compose down
+```
+
+### Stan kontenerów
+
+```bash
+docker compose ps
+```
+
+### Logi wszystkich usług
+
+```bash
+docker compose logs -f
+```
+
+### Logi backendu
+
+```bash
+docker compose logs -f backend
+```
+
+### Wejście do kontenera backendu
+
+```bash
+docker compose exec backend sh
+```
+
+### Lista komend Artisan
+
+```bash
+docker compose exec backend php artisan list
+```
+
+### Migracje bazy danych
+
+```bash
+docker compose exec backend php artisan migrate
+```
+
+### Czyszczenie cache konfiguracji
+
+```bash
+docker compose exec backend php artisan config:clear
+```
+
+Zwykłe `docker compose down` nie usuwa nazwanych wolumenów. Nie dodawaj opcji `-v`, jeśli chcesz zachować dane przechowywane w wolumenie PostgreSQL.
+
+## Konfiguracja
+
+Pliki `.env` nie powinny trafiać do repozytorium. Udostępniamy wyłącznie `.env.example` z bezpiecznymi przykładami.
+
+| Zmienna | Przeznaczenie |
+| --- | --- |
+| `APP_NAME` | Nazwa aplikacji Laravel: MilesAway |
+| `APP_ENV` | Środowisko działania |
+| `APP_KEY` | Klucz aplikacji Laravel |
+| `APP_DEBUG` | Szczegółowe błędy; wyłączone na środowisku udostępnianym użytkownikom |
+| `APP_URL` | Bazowy adres aplikacji Laravel |
+| `DB_*` | Dane połączenia Laravel z PostgreSQL |
+| `API_BASE_URL` | Proponowana konfiguracja adresu API w aplikacji Flutter przez `--dart-define` |
+
+### Usługi mapowe
+
+Konfiguracja routingu, geokodowania i map zostanie uzupełniona po wyborze dostawców.
+
+Proponowane nazwy ustawień backendu:
+
+```dotenv
+ROUTING_BASE_URL=
+ROUTING_API_KEY=
+GEOCODING_BASE_URL=
+GEOCODING_API_KEY=
+```
+
+Zmienne te wymagają obsługi w konfiguracji i kodzie Laravel. Nie każdy dostawca wymaga klucza API.
+
+Prywatne klucze usług przechowujemy po stronie backendu. Parametry przekazywane do aplikacji Flutter przez `--dart-define` nie są miejscem na sekrety.
+
+## Testy i jakość kodu
+
+### Backend — Laravel i Filament
+
+Z katalogu głównego repozytorium:
+
+```bash
+docker compose exec backend php artisan test
+docker compose exec backend ./vendor/bin/pint --test
+```
+
+Testy korzystające z bazy muszą używać oddzielnej bazy testowej. Nie uruchamiaj testów czyszczących dane na bazie produkcyjnej ani bazie z ważnymi danymi deweloperskimi.
+
+### Aplikacja mobilna — Flutter
+
+Z katalogu `mobile/`:
 
 ```bash
 dart format --output=none --set-exit-if-changed .
 flutter analyze
 flutter test
+flutter build apk --debug
 ```
 
-Testy integracyjne wymagają osobno skonfigurowanego emulatora lub urządzenia.
+Jeżeli projekt ma skonfigurowane testy integracyjne w `integration_test/`, uruchom je na emulatorze lub urządzeniu:
 
-Najważniejsze obszary weryfikacji:
+```bash
+flutter test integration_test
+```
 
-- rejestracja, logowanie i unieważnianie tokenów,
-- dostęp do danych prywatnych i cudzych zasobów,
-- poprawność punktów, kolejności i odcinków,
-- prezentacja różnych środków transportu,
-- błędy zewnętrznych usług,
-- statystyki roczne i całej historii,
-- przeliczanie danych po edycji i usunięciu podróży.
+### GitHub Actions
 
-GitHub Actions ma automatyzować kontrole jakości i testy. Automatyczne wdrażanie wymaga wcześniejszego ustalenia środowiska docelowego.
+Docelowo CI powinno sprawdzać:
 
-## Organizacja pracy
+- testy backendu PHPUnit,
+- formatowanie PHP przez Laravel Pint,
+- formatowanie kodu Dart,
+- analizę statyczną Flutter,
+- testy aplikacji mobilnej,
+- budowanie aplikacji Android.
 
-Praca jest planowana i śledzona w **GitHub Issues**.
+Rzeczywisty zakres automatyzacji określają pliki w `.github/workflows/`. Powyższa lista jest planem do czasu wdrożenia odpowiednich workflow.
 
-Każde zadanie powinno zawierać:
-
-- cel i zakres,
-- kryteria akceptacji,
-- sposób weryfikacji,
-- zależności,
-- przypisaną osobę,
-- priorytet i milestone.
-
-Zmiany są przygotowywane na osobnych gałęziach i scalane przez pull request po przeglądzie kodu.
-
-Szczegółowe zasady opisano w [CONTRIBUTING.md](CONTRIBUTING.md).
+Przed wysłaniem pull requesta uruchom kontrole właściwe dla zmienianej części projektu.
 
 ## Dokumentacja
 
