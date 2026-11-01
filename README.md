@@ -191,87 +191,119 @@ Planowane ekrany:
 - profil i ustawienia prywatności,
 - przeglądanie publicznych profili i ich podróży.
 
-Wymagania
-Docker Desktop (z obsługą Docker Compose v2)
-Git
-(Opcjonalnie do pracy bez kontenerów: PHP >= 8.3 i Composer, Node.js 22.18+ (lub 24.12+) i npm, PostgreSQL 16).
+## Uruchomienie projektu
 
-Uruchomienie lokalne (Docker)
-Sklonuj repozytorium:
+### Konfiguracja i sekrety
 
-git clone <url-repo>
-cd dziennik
-Skonfiguruj zmienne środowiskowe:
+Nie należy umieszczać w repozytorium:
 
-cp .env.example .env
-cp .env backend/.env
-cp frontend/.env.example frontend/.env
-Główny .env dostarcza zmienne dla Docker Compose, a backend/.env jest używany przez Laravel. Oba pliki muszą mieć zgodne wartości DB_*. Ustaw niepuste lokalne DB_PASSWORD w głównym .env przed uruchomieniem bazy.
+- plików `.env` zawierających dane dostępowe,
+- haseł i tokenów,
+- prywatnych kluczy usług zewnętrznych,
+- rzeczywistych danych użytkowników,
+- kopii produkcyjnej bazy danych.
 
-Zbuduj i uruchom kontenery w tle:
+Plik `.env.example` powinien zawierać nazwy wymaganych zmiennych i bezpieczne wartości przykładowe.
 
-docker compose up -d --build
-Zainstaluj zależności backendu:
+## Testy i jakość kodu
 
-docker compose exec backend composer install
-Zainicjalizuj backend wewnątrz kontenera:
+Poniższe polecenia są przewidziane do użycia po utworzeniu projektów i instalacji zależności.
 
-# Sprawdź, czy backend/.env zawiera klucz; wygeneruj go tylko, jeśli jest pusty
-docker compose exec backend sh -c 'if grep -q "^APP_KEY=." .env; then echo "APP_KEY jest ustawiony"; else echo "APP_KEY jest pusty — generuję klucz"; php artisan key:generate; fi'
+### Backend
 
-# Odtwórz backend, aby kontener wczytał APP_KEY z pliku backend/.env
-docker compose up -d --force-recreate backend
+Uruchamiane z katalogu aplikacji Laravel lub we właściwym kontenerze:
 
-# Sprawdź, czy klucz jest dostępny w środowisku kontenera (bez wypisywania wartości)
-docker compose exec backend php -r "echo getenv('APP_KEY') ? 'APP_KEY jest ustawiony' : 'APP_KEY jest pusty';"
+```bash
+php artisan test
+./vendor/bin/pint --test
+```
 
-# Wykonanie migracji bazy i seedera
-docker compose exec backend php artisan migrate --seed
-Dostęp do aplikacji
-Frontend (Vue/Vite): http://localhost:5173 (z hot-reloadem Vite)
-Backend (API / Nginx): http://localhost:8000
-Baza danych (PostgreSQL): localhost:5432 (baza, użytkownik i hasło zgodne z głównym .env)
-Przydatne polecenia Docker
-# Zatrzymanie kontenerów
-docker compose down
+### Aplikacja mobilna
 
-# Podgląd logów wszystkich usług
-docker compose logs -f
+Uruchamiane z katalogu projektu Flutter:
 
-# Wejście do powłoki kontenera backendu
-docker compose exec backend sh
+```bash
+dart format --output=none --set-exit-if-changed .
+flutter analyze
+flutter test
+```
 
-# Uruchamianie komend Artisan
-docker compose exec backend php artisan <komenda>
-Konfiguracja
-Zmienne środowiskowe ustawiasz w plikach .env (nie commituj ich do repozytorium). Wartości w głównym .env i backend/.env muszą być zgodne. Lokalnego hasła do bazy nie używaj na środowisku produkcyjnym.
+Testy integracyjne wymagają osobno skonfigurowanego emulatora lub urządzenia.
 
-W pliku backend/.env dla środowiska Docker hostem bazy danych jest nazwa kontenera postgres:
+Najważniejsze obszary weryfikacji:
 
-DB_CONNECTION=pgsql
-DB_HOST=postgres
-DB_PORT=5432
-DB_DATABASE=dziennik
-DB_USERNAME=dziennik_user
-DB_PASSWORD=local_dev_password
-Zmienna	Opis
-DB_*	Dane połączenia z bazą (backend)
-ROUTING_API_KEY	Klucz do API wyznaczania tras (do skonfigurowania, gdy funkcja zostanie wdrożona)
-GEOCODING_API_KEY	Klucz do API geokodowania (do skonfigurowania, gdy funkcja zostanie wdrożona)
-VITE_API_BASE_URL	Bazowy adres API frontendu (domyślnie http://localhost:8000/api/v1)
-Testy i jakość kodu
-Polecenia lokalne uruchamiamy w kontenerach:
+- rejestracja, logowanie i unieważnianie tokenów,
+- dostęp do danych prywatnych i cudzych zasobów,
+- poprawność punktów, kolejności i odcinków,
+- prezentacja różnych środków transportu,
+- błędy zewnętrznych usług,
+- statystyki roczne i całej historii,
+- przeliczanie danych po edycji i usunięciu podróży.
 
-# Backend
-docker compose exec backend php artisan test
-docker compose exec backend ./vendor/bin/pint --test
+GitHub Actions ma automatyzować kontrole jakości i testy. Automatyczne wdrażanie wymaga wcześniejszego ustalenia środowiska docelowego.
 
-# Frontend
-docker compose exec frontend npm run lint
-docker compose exec frontend npm run test
-docker compose exec frontend npm run build
-GitHub Actions uruchamia testy backendu i build frontendu dla PR. Zmiany w frontend/ uruchamiają dodatkowo workflow lint/test/build frontendu; osobny workflow sprawdza formatowanie backendu. Mimo to przed wysłaniem PR uruchom lokalnie wszystkie kontrole z powyższej listy.
+## Organizacja pracy
 
+Praca jest planowana i śledzona w **GitHub Issues**.
+
+Każde zadanie powinno zawierać:
+
+- cel i zakres,
+- kryteria akceptacji,
+- sposób weryfikacji,
+- zależności,
+- przypisaną osobę,
+- priorytet i milestone.
+
+Zmiany są przygotowywane na osobnych gałęziach i scalane przez pull request po przeglądzie kodu.
+
+Szczegółowe zasady opisano w [CONTRIBUTING.md](CONTRIBUTING.md).
+
+### Wymagania organizacyjne zajęć
+
+- Projekt jest wykonywany w tych samych grupach co projekt z Programowania urządzeń mobilnych.
+- Skład grupy i linki do publicznych repozytoriów należy zgłosić najpóźniej do drugich zajęć projektowych.
+- Zgodnie z przekazanymi zasadami spóźnione zgłoszenie skutkuje modyfikatorem −0,5 do oceny końcowej projektu.
+- Lista zadań obejmująca wymagania funkcjonalne i przypisane osoby powinna być gotowa przed czwartymi zajęciami.
+
+Dokładne daty należy ustalić na podstawie harmonogramu grupy.
+
+## Dokumentacja
+
+Dokumentacja przygotowana w pakiecie projektu:
+
+- [Zasady współpracy](CONTRIBUTING.md)
+- [Backlog GitHub Issues](docs/ISSUES.md)
+- [Decyzje i reguły biznesowe](docs/DECISIONS.md)
+- [Dokumentacja API](docs/API.md)
+- [Scenariusze odbioru](docs/ACCEPTANCE.md)
+- [Źródła i podstawa opracowania](docs/SOURCES.md)
+
+Zmiany API, konfiguracji i reguł biznesowych powinny być dokumentowane w tym samym pull requeście co implementacja.
+
+## Zakres i ograniczenia
+
+Projekt nie zakłada:
+
+- nawigacji GPS,
+- śledzenia lokalizacji w czasie rzeczywistym,
+- idealnego odtwarzania faktycznie przebytej drogi,
+- wyznaczania tras kolejowych po torach.
+
+Trasy mają być wiarygodne i zgodne z wybranym środkiem transportu.
+
+Zdjęcia, osobne wpisy wspomnień, obserwowanie użytkowników, polubienia, powiadomienia i planowanie przyszłych wyjazdów mogą zostać dodane jako rozszerzenia po realizacji podstawowych wymagań.
+
+## Zespół
+
+| Osoba | Konto GitHub | Odpowiedzialność |
+| --- | --- | --- |
+| Amadeusz Żyła | [@Amadeuszzyla](https://github.com/Amadeuszzyla) | Aplikacja mobilna, dokumentacja, konfiguracja i utrzymanie serwera VPS |
+| Adrian Jurak | [@AdrianJurak](https://github.com/AdrianJurak) | Backend i API |
+| Kyril Ryab | [@KirilRyab](https://github.com/KirilRyab) | Aplikacja mobilna |
+
+## Licencja
+Wykorzystane biblioteki, dane geograficzne i usługi zewnętrzne podlegają własnym licencjom oraz warunkom użytkowania. W aplikacji należy zachować wymagane informacje o autorstwie i źródłach danych.
 Współpraca
 Zasady współpracy opisuje CONTRIBUTING.md, procedura realizacji zadań jest w TASK_ins.md, a backlog w TASK.md.
 
