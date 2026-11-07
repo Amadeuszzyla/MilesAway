@@ -123,7 +123,7 @@ Rozmiar jest oceną względną. **Szacunek (h)** to wstępna ocena zespołu: imp
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | PR-8 | Zaimplementuj rejestrację, logowanie i wylogowanie w API | backend | @AdrianJurak | PR-1, PR-2, PR-4 | L | 16 | — |
 | PR-9 | Zaimplementuj weryfikację e-maila i reset hasła w API | backend | @AdrianJurak | PR-8 | L | 14 | — |
-| PR-10 | Udostępnij edycję profilu i ustawienia prywatności w API | backend | @AdrianJurak | PR-8, PR-9 | M | 6 | — |
+| PR-10 | Udostępnij edycję profilu i ustawienia prywatności w API. Zaimplementuj usuwanie własnego konta i danych w API | backend | @AdrianJurak | PR-8, PR-9 | M | 12 | — |
 | PR-11 | Zintegruj klienta HTTP z zarządzaniem sesją Flutter | mobile | @KirilRyab | PR-3, PR-4, PR-8 | M | 8 | — |
 | PR-12 | Dodaj ekrany logowania, rejestracji i odzyskiwania dostępu | mobile | @KirilRyab | PR-6, PR-8, PR-9, PR-11 | L | 16 | — |
 | PR-13 | Dodaj ustawienia profilu i usuwanie konta w aplikacji | mobile | @Amadeuszzyla | PR-6, PR-10, PR-11, PR-27 | M | 8 | — |
@@ -150,21 +150,20 @@ Rozmiar jest oceną względną. **Szacunek (h)** to wstępna ocena zespołu: imp
 | PR-24 | Skonfiguruj Filament i dodaj zarządzanie kontami oraz banami | admin / backend | @AdrianJurak | PR-8, PR-10 | L | 18 | — |
 | PR-25 | Udostępnij publiczne profile i podróże przez API | backend | @AdrianJurak | PR-10, PR-21, PR-24 | M | 8 | — |
 | PR-26 | Dodaj przeglądanie publicznych profili w aplikacji | mobile | @KirilRyab | PR-16, PR-22, PR-23, PR-25 | M | 8 | — |
-| PR-27 | Zaimplementuj usuwanie własnego konta i danych w API | backend | @AdrianJurak | PR-10, PR-14 | M | 8 | — |
-| PR-36 | Dodaj w panelu podgląd podróży i miejsc oraz usuwanie treści naruszających zasady | admin / backend | @AdrianJurak | PR-14, PR-18, PR-21, PR-24 | M | 10 | — |
+| PR-35 | Dodaj w panelu podgląd podróży i miejsc oraz usuwanie treści naruszających zasady | admin / backend | @AdrianJurak | PR-14, PR-18, PR-21, PR-24 | M | 10 | — |
 
 ### Wdróż, sprawdź i udokumentuj projekt
 
 | ID | Zadanie | Obszar | Właściciel | Zależy od | Rozmiar | Szac. (h) | Rzecz. (h) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| PR-28 | Wdróż API na VPS i sprawdź procedurę aktualizacji | DevOps | @Amadeuszzyla | PR-2, PR-4 | M | 10 | — |
-| PR-29 | Skonfiguruj kopie zapasowe i sprawdź odtworzenie danych | DevOps | @Amadeuszzyla | PR-27, PR-28 | M | 8 | — |
-| PR-30 | Przygotuj dane demonstracyjne i wyniki referencyjne | QA / backend | @AdrianJurak | PR-21, PR-25, PR-27 | M | 8 | — |
-| PR-31 | Zmierz i popraw wydajność API | backend / wydajność | @AdrianJurak | PR-21, PR-25, PR-28, PR-30 | M | 8 | — |
-| PR-32 | Sprawdź wydajność i dostępność aplikacji Android | mobile / jakość | @Amadeuszzyla | PR-13, PR-22, PR-23, PR-26, PR-30 | M | 8 | — |
-| PR-33 | Przeprowadź odbiór integracyjny aplikacji, API i panelu | QA | @KirilRyab | PR-3, PR-12, PR-13, PR-17, PR-20, PR-22, PR-23, PR-24, PR-26, PR-28, PR-29, PR-30, PR-31, PR-32, PR-36 | L | 16 | — |
-| PR-34 | Uzupełnij dokumentację i opracuj sprawozdanie | dokumentacja | @Amadeuszzyla | PR-7, PR-29, PR-31, PR-32, PR-33 | M | 12 | — |
-| PR-35 | Udostępnij APK i przeprowadź demonstrację projektu | wydanie / odbiór | @KirilRyab | PR-33, PR-34 | M | 8 | — |
+| PR-27 | Wdróż API na VPS i sprawdź procedurę aktualizacji | DevOps | @Amadeuszzyla | PR-2, PR-4 | M | 10 | — |
+| PR-28 | Skonfiguruj kopie zapasowe i sprawdź odtworzenie danych | DevOps | @Amadeuszzyla | PR-27, PR-28 | M | 8 | — |
+| PR-29 | Przygotuj dane demonstracyjne i wyniki referencyjne | QA / backend | @AdrianJurak | PR-21, PR-25, PR-27 | M | 8 | — |
+| PR-30 | Zmierz i popraw wydajność API | backend / wydajność | @AdrianJurak | PR-21, PR-25, PR-28, PR-30 | M | 8 | — |
+| PR-31 | Sprawdź wydajność i dostępność aplikacji Android | mobile / jakość | @Amadeuszzyla | PR-13, PR-22, PR-23, PR-26, PR-30 | M | 8 | — |
+| PR-32 | Przeprowadź odbiór integracyjny aplikacji, API i panelu | QA | @KirilRyab | PR-3, PR-12, PR-13, PR-17, PR-20, PR-22, PR-23, PR-24, PR-26, PR-28, PR-29, PR-30, PR-31, PR-32, PR-36 | L | 16 | — |
+| PR-33 | Uzupełnij dokumentację i opracuj sprawozdanie | dokumentacja | @Amadeuszzyla | PR-7, PR-29, PR-31, PR-32, PR-33 | M | 12 | — |
+| PR-34 | Udostępnij APK i przeprowadź demonstrację projektu | wydanie / odbiór | @KirilRyab | PR-33, PR-34 | M | 8 | — |
 
 ## Szczegółowe opisy Issues
 
@@ -426,24 +425,30 @@ Potwierdzać własność adresu przed dostępem do danych. Umożliwić odzyskani
 **Właściciel:** @AdrianJurak  
 **Obszar:** backend  
 **Zależy od:** PR-8, PR-9  
-**Rozmiar:** M  
-**Szacunek:** 6 h  
+**Rozmiar:** L  
+**Szacunek:** 12 h  
 **Czas rzeczywisty:** — h
 
 #### Kontekst i cel
 
 Pozwolić użytkownikowi aktualizować własne konto.
+Usunąć konto wraz z danymi i zapobiec jego powrotowi po restore.
 
 #### Wymagania techniczne
 
 - Dodaj PATCH /me i kontrolowane operacje zmiany hasła/e-maila wymagające aktualnego hasła.
 - Zmiana e-maila wymaga ponownej weryfikacji; zmiana widoczności unieważnia publiczny cache.
+- Dodaj DELETE /me wymagające hasła i jawnego potwierdzenia; usunąć konto, punkty, odcinki, podróże i sesje.
+- Przygotuj minimalny rejestr nieodwracalnych usunięć z trwałym ID konta oraz eksport poza odtwarzaną kopię; opisać bezpieczny retry.
 
 #### Kryteria akceptacji
 
 - [ ] Użytkownik zmienia dozwolone pola wyłącznie własnego konta.
 - [ ] Prywatność obowiązuje przy następnym żądaniu; dane wrażliwe nie wyciekają.
 - [ ] Zmiana hasła/e-maila bez poprawnego hasła jest odrzucana; nowy e-mail przechodzi weryfikację.
+- [ ] Poprawna operacja usuwa konto i wszystkie prywatne dane zależne; inne konto nie jest naruszone.
+- [ ] Błędne hasło odrzuca operację; ponowienie nie odtwarza danych.
+- [ ] Testy sprawdzają kaskadę i ponowne zastosowanie rejestru; procedura przechowania/restore jest sprawdzana w PR-28.
 
 ### PR-11 — Zintegruj klienta HTTP z zarządzaniem sesją Flutter
 
@@ -909,31 +914,7 @@ Udostępnić społeczną część wymaganą w PDF.
 - [ ] Brak przycisków edycji cudzych podróży; nawigacja nie miesza danych właścicieli.
 - [ ] Po odmowie API wcześniejsze dane są usuwane z widoku; testy obejmują prywatność i ban.
 
-### PR-27 — Zaimplementuj usuwanie własnego konta i danych w API
-
-**Właściciel:** @AdrianJurak  
-**Obszar:** backend  
-**Zależy od:** PR-10, PR-14  
-**Rozmiar:** M  
-**Szacunek:** 8 h  
-**Czas rzeczywisty:** — h
-
-#### Kontekst i cel
-
-Usunąć konto wraz z danymi i zapobiec jego powrotowi po restore.
-
-#### Wymagania techniczne
-
-- Dodaj DELETE /me wymagające hasła i jawnego potwierdzenia; usunąć konto, punkty, odcinki, podróże i sesje.
-- Przygotuj minimalny rejestr nieodwracalnych usunięć z trwałym ID konta oraz eksport poza odtwarzaną kopię; opisać bezpieczny retry.
-
-#### Kryteria akceptacji
-
-- [ ] Poprawna operacja usuwa konto i wszystkie prywatne dane zależne; inne konto nie jest naruszone.
-- [ ] Błędne hasło odrzuca operację; ponowienie nie odtwarza danych.
-- [ ] Testy sprawdzają kaskadę i ponowne zastosowanie rejestru; procedura przechowania/restore jest sprawdzana w PR-29.
-
-### PR-28 — Wdróż API na VPS i sprawdź procedurę aktualizacji
+### PR-27 — Wdróż API na VPS i sprawdź procedurę aktualizacji
 
 **Właściciel:** @Amadeuszzyla  
 **Obszar:** DevOps  
@@ -959,7 +940,7 @@ Sprawdzić środowisko produkcyjne przed zakończeniem funkcji.
 - [ ] Debug jest wyłączony, sekrety poza repo, baza nie jest publiczna.
 - [ ] Druga osoba wykonuje aktualizację i kontrolowane wycofanie; późniejsze funkcje wdrażane są przyrostowo.
 
-### PR-29 — Skonfiguruj kopie zapasowe i sprawdź odtworzenie danych
+### PR-28 — Skonfiguruj kopie zapasowe i sprawdź odtworzenie danych
 
 **Właściciel:** @Amadeuszzyla  
 **Obszar:** DevOps  
@@ -983,7 +964,7 @@ Sprawdzić odzyskiwanie danych bez przywracania usuniętych kont.
 - [ ] Po restore relacje i reprezentatywne podróże są poprawne.
 - [ ] Konto usunięte po wykonaniu kopii nie wraca; izolowane środowisko nie wysyła wiadomości.
 
-### PR-30 — Przygotuj dane demonstracyjne i wyniki referencyjne
+### PR-29 — Przygotuj dane demonstracyjne i wyniki referencyjne
 
 **Właściciel:** @AdrianJurak  
 **Obszar:** QA / backend  
@@ -1007,7 +988,7 @@ Zapewnić powtarzalną podstawę testów i demonstracji.
 - [ ] Zapisano dokładne oczekiwane liczby miejsc, krajów, podróży i dystansów dla lat i całości.
 - [ ] Zestaw zawiera profile prywatne/publiczne/zbanowane i przypadek jednopunktowy.
 
-### PR-31 — Zmierz i popraw wydajność API
+### PR-30 — Zmierz i popraw wydajność API
 
 **Właściciel:** @AdrianJurak  
 **Obszar:** backend / wydajność  
@@ -1031,7 +1012,7 @@ Zachować sprawność wieloletniej historii.
 - [ ] Nie giną strony/rekordy i nie występuje OOM.
 - [ ] Test regresji chroni usunięte wąskie gardło; cache nie ujawnia danych po zmianie prywatności.
 
-### PR-32 — Sprawdź wydajność i dostępność aplikacji Android
+### PR-31 — Sprawdź wydajność i dostępność aplikacji Android
 
 **Właściciel:** @Amadeuszzyla  
 **Obszar:** mobile / jakość  
@@ -1055,7 +1036,7 @@ Utrzymać czytelność i płynność na docelowym telefonie.
 - [ ] Najważniejsze ścieżki działają przy powiększonym tekście i czytniku ekranu.
 - [ ] Wykryte blokujące problemy są poprawione i ponownie zweryfikowane.
 
-### PR-33 — Przeprowadź odbiór integracyjny aplikacji, API i panelu
+### PR-32 — Przeprowadź odbiór integracyjny aplikacji, API i panelu
 
 **Właściciel:** @KirilRyab  
 **Obszar:** QA  
@@ -1079,7 +1060,7 @@ Potwierdzić działanie całego systemu i wymagania PDF.
 - [ ] Raport podaje commit/artefakt, urządzenie, testera, kroki, oczekiwany/rzeczywisty wynik oraz linki usterek.
 - [ ] Nie pozostają usterki blokujące; poprawki przechodzą ponownie testy/lint/build i właściwe scenariusze.
 
-### PR-34 — Uzupełnij dokumentację i opracuj sprawozdanie
+### PR-33 — Uzupełnij dokumentację i opracuj sprawozdanie
 
 **Właściciel:** @Amadeuszzyla  
 **Obszar:** dokumentacja  
@@ -1103,7 +1084,7 @@ Opisać rzeczywiście dostarczony system i sposób jego utrzymania.
 - [ ] Instrukcje odtwarza druga osoba; linki i kompilacja PDF są poprawne.
 - [ ] Raport nie przedstawia planu jako wykonania i nie zawiera terminów zajęć ani zasad oceniania.
 
-### PR-35 — Udostępnij APK i przeprowadź demonstrację projektu
+### PR-34 — Udostępnij APK i przeprowadź demonstrację projektu
 
 **Właściciel:** @KirilRyab  
 **Obszar:** wydanie / odbiór  
@@ -1127,7 +1108,7 @@ Udostępnić sprawdzoną wersję i powtarzalny scenariusz prezentacji.
 - [ ] Klucz podpisu pozostaje poza repo; wersja i commit są zapisane.
 - [ ] Zespół przechodzi demo kont, podróży, map, statystyk, banów i moderacji w panelu; nagranie jest tylko wariantem awaryjnym.
 
-### PR-36 — Dodaj w panelu podgląd podróży i miejsc oraz usuwanie treści naruszających zasady
+### PR-35 — Dodaj w panelu podgląd podróży i miejsc oraz usuwanie treści naruszających zasady
 
 **Właściciel:** @AdrianJurak  
 **Obszar:** admin / backend  
