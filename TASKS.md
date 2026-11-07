@@ -1,10 +1,10 @@
 # TASKS — backlog projektu MilesAway
 
-Stan: plan realizacji. Kody **PR-1–PR-36** identyfikują zadania w tym pliku; nie są numerami GitHub Issues ani Pull Requests.
+Stan: plan realizacji. Kody **PR-1–PR-35** identyfikują zadania w tym pliku; nie są numerami GitHub Issues ani Pull Requests.
 ## Zakres i założenia
 
 - Aplikacja: **Android / Flutter**. Backend: **Laravel, Sanctum, PostgreSQL**. Panel webowy: **Filament**. Infrastruktura: Docker Compose i VPS.
-- Panel służy do zarządzania kontami i banami (PR-24) oraz do podglądu podróży i miejsc tylko do odczytu wraz z usuwaniem podróży naruszających zasady (PR-36). Panel nie tworzy ani nie edytuje treści podróży i miejsc.
+- Panel służy do zarządzania kontami i banami (PR-24) oraz do podglądu podróży i miejsc tylko do odczytu wraz z usuwaniem podróży naruszających zasady (PR-35). Panel nie tworzy ani nie edytuje treści podróży i miejsc.
 - Weryfikacja e-maila, reset hasła i usuwanie własnego konta są obowiązkowymi rozszerzeniami przyjętymi przez zespół.
 - Obowiązkowe są testy, lint i build. Wdrożenie VPS może być ręczne według sprawdzonego runbooka.
 - Planowane po MVP: iOS, nawigacja GPS, idealne odtworzenie faktycznej drogi, planowanie przyszłych podróży, zdjęcia, avatar, biogram, komentarze, obserwowanie, wiadomości i pełny tryb offline.
@@ -12,9 +12,9 @@ Stan: plan realizacji. Kody **PR-1–PR-36** identyfikują zadania w tym pliku; 
 
 | Właściciel | Odpowiedzialność |
 | --- | --- |
-| @AdrianJurak | Backend, API, baza danych i Filament |
-| @KirilRyab | Flutter, integracja aplikacji, CI mobile i odbiór |
-| @Amadeuszzyla | Flutter: UI/mapy/profil, dokumentacja i VPS |
+| @AdrianJurak | Backend/API: Laravel, baza danych, integracje map, statystyki i Filament |
+| @KirilRyab | Flutter: aplikacja Android (UI, mapy, sesja, edytor tras), CI mobile i wydajność aplikacji |
+| @Amadeuszzyla | Dokumentacja i VPS: OpenAPI, sprawozdanie, wdrożenie, kopie zapasowe, dane demo, odbiór i APK |
 
 Repozytoria wskazane w materiałach: API — `AdrianJurak/MilesAway_Travel_Journal_Api`; APP — `Amadeuszzyla/MilesAway`. Zadania backendu i Fluttera są oddzielne; odbiór systemu pozostaje przekrojowy.
 
@@ -36,7 +36,7 @@ Repozytoria wskazane w materiałach: API — `AdrianJurak/MilesAway_Travel_Journ
 | Brak obliczeń | `null` i stan pending/failed; suma znanych odcinków jest oznaczona jako niepełna. Podróż bez odcinków ma poprawne zero. |
 | Edycja trasy | Atomowy zapis i kontrola revision. Niezmienione pary zachowują transport; nowe pary wymagają wyboru. Nieaktualne joby nie zapisują wyników. |
 | Prywatność | Profil domyślnie prywatny. Odczyt cudzych publicznych danych tylko po zalogowaniu, bez e-maila i sekretów. Zmiana prywatności/ban obowiązuje przy kolejnym żądaniu, również przy cache. |
-| Moderacja | Admin może przeglądać podróże i miejsca tylko do odczytu oraz usunąć podróż naruszającą zasady po podaniu powodu. Usunięcie jest trwałe, audytowane i nie zmienia innych danych użytkownika; admin nie edytuje treści. |
+| Moderacja | Admin może przeglądać podróże i miejsca tylko do odczytu oraz usunąć podróż naruszającą zasady po podaniu powodu. Usunięcie jest trwałe, audytowane i nie zmienia innych danych użytkownika; admin nie edytuje treści. Administrator widzi podróże także prywatnych profili wyłącznie w panelu (propozycja do zatwierdzenia przez zespół); nie widzi haseł ani tokenów. Brak edycji treści jest świadomą decyzją. |
 | Ban | Blokuje dostęp, unieważnia sesje/tokeny i ukrywa publiczne dane; nie usuwa podróży. Unban wymaga nowego logowania i zachowuje wcześniejszą widoczność. |
 | Usunięcie konta | Potwierdzenie hasłem, usunięcie danych i sesji. Odtworzenie starej kopii wymaga zastosowania aktualnego rejestru usunięć przed udostępnieniem systemu. |
 | Sieć | Formularze zachowują wpisane dane podczas bieżącej pracy po błędzie sieci. Nie jest to pełna synchronizacja offline. |
@@ -112,9 +112,9 @@ Rozmiar jest oceną względną. **Szacunek (h)** to wstępna ocena zespołu: imp
 | PR-1 | Ustal reguły domeny i skonfiguruj organizację pracy | dokumentacja / organizacja | @Amadeuszzyla | — | M | 8 | — |
 | PR-2 | Uruchom backend Laravel i udostępnij wersjonowane API | backend / DevOps | @AdrianJurak | — | M | 8 | — |
 | PR-3 | Uruchom aplikację Flutter i skonfiguruj CI Android | mobile / CI | @KirilRyab | — | M | 8 | — |
-| PR-4 | Zdefiniuj kontrakt OpenAPI i skonfiguruj CI backendu | dokumentacja / API / CI / backend | @AdrianJurak | PR-1, PR-2 | M | 10 | — |
-| PR-5 | Wybierz i zweryfikuj dostawców usług mapowych | analiza / integracje | @AdrianJurak | PR-1 | M | 8 | — |
-| PR-6 | Dodaj motyw MilesAway i nawigację aplikacji | mobile / UI | @Amadeuszzyla | PR-3 | M | 8 | — |
+| PR-4 | Zdefiniuj kontrakt OpenAPI i skonfiguruj CI backendu | dokumentacja / API / CI / backend | @Amadeuszzyla | PR-1, PR-2 | M | 10 | — |
+| PR-5 | Wybierz i zweryfikuj dostawców usług mapowych | analiza / integracje | @Amadeuszzyla | PR-1 | M | 8 | — |
+| PR-6 | Dodaj motyw MilesAway i nawigację aplikacji | mobile / UI | @KirilRyab | PR-3 | M | 8 | — |
 | PR-7 | Opisz uruchomienie projektu i przygotuj szkielet raportu | dokumentacja | @Amadeuszzyla | PR-2, PR-3 | M | 6 | — |
 
 ### Udostępnij konta użytkowników
@@ -123,10 +123,10 @@ Rozmiar jest oceną względną. **Szacunek (h)** to wstępna ocena zespołu: imp
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | PR-8 | Zaimplementuj rejestrację, logowanie i wylogowanie w API | backend | @AdrianJurak | PR-1, PR-2, PR-4 | L | 16 | — |
 | PR-9 | Zaimplementuj weryfikację e-maila i reset hasła w API | backend | @AdrianJurak | PR-8 | L | 14 | — |
-| PR-10 | Udostępnij edycję profilu i ustawienia prywatności w API. Zaimplementuj usuwanie własnego konta i danych w API | backend | @AdrianJurak | PR-8, PR-9 | M | 12 | — |
+| PR-10 | Udostępnij edycję profilu, ustawienia prywatności i usuwanie konta w API | backend | @AdrianJurak | PR-8, PR-9 | L | 14 | — |
 | PR-11 | Zintegruj klienta HTTP z zarządzaniem sesją Flutter | mobile | @KirilRyab | PR-3, PR-4, PR-8 | M | 8 | — |
 | PR-12 | Dodaj ekrany logowania, rejestracji i odzyskiwania dostępu | mobile | @KirilRyab | PR-6, PR-8, PR-9, PR-11 | L | 16 | — |
-| PR-13 | Dodaj ustawienia profilu i usuwanie konta w aplikacji | mobile | @Amadeuszzyla | PR-6, PR-10, PR-11, PR-27 | M | 8 | — |
+| PR-13 | Dodaj ustawienia profilu i usuwanie konta w aplikacji | mobile | @KirilRyab | PR-6, PR-10, PR-11 | M | 8 | — |
 
 ### Dodaj podróże, miejsca i trasy
 
@@ -138,14 +138,14 @@ Rozmiar jest oceną względną. **Szacunek (h)** to wstępna ocena zespołu: imp
 | PR-17 | Dodaj edytor trasy z wyszukiwaniem i wyborem miejsc | mobile | @KirilRyab | PR-15, PR-16, PR-18, PR-20 | L | 20 | — |
 | PR-18 | Zintegruj geokodowanie i rozpoznawanie miejsc oraz krajów | backend | @AdrianJurak | PR-4, PR-5, PR-8, PR-14 | L | 16 | — |
 | PR-19 | Zaimplementuj obliczanie tras, dystansów i zapis wyników | backend | @AdrianJurak | PR-1, PR-2, PR-5, PR-14, PR-15 | L | 18 | — |
-| PR-20 | Wyświetl podróż na mapie i rozróżnij środki transportu | mobile | @Amadeuszzyla | PR-5, PR-6, PR-16, PR-19 | L | 20 | — |
+| PR-20 | Wyświetl podróż na mapie i rozróżnij środki transportu | mobile | @KirilRyab | PR-5, PR-6, PR-16, PR-19 | L | 20 | — |
 
 ### Dodaj historię, statystyki i zarządzanie kontami
 
 | ID | Zadanie | Obszar | Właściciel | Zależy od | Rozmiar | Szac. (h) | Rzecz. (h) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | PR-21 | Udostępnij historię map i statystyki podróżnicze w API | backend | @AdrianJurak | PR-14, PR-18, PR-19 | L | 18 | — |
-| PR-22 | Wyświetl historię podróży i odwiedzone kraje na mapie | mobile | @Amadeuszzyla | PR-20, PR-21 | L | 16 | — |
+| PR-22 | Wyświetl historię podróży i odwiedzone kraje na mapie | mobile | @KirilRyab | PR-20, PR-21 | L | 16 | — |
 | PR-23 | Dodaj ekran statystyk z filtrem roku | mobile | @KirilRyab | PR-6, PR-11, PR-21 | M | 10 | — |
 | PR-24 | Skonfiguruj Filament i dodaj zarządzanie kontami oraz banami | admin / backend | @AdrianJurak | PR-8, PR-10 | L | 18 | — |
 | PR-25 | Udostępnij publiczne profile i podróże przez API | backend | @AdrianJurak | PR-10, PR-21, PR-24 | M | 8 | — |
@@ -157,13 +157,13 @@ Rozmiar jest oceną względną. **Szacunek (h)** to wstępna ocena zespołu: imp
 | ID | Zadanie | Obszar | Właściciel | Zależy od | Rozmiar | Szac. (h) | Rzecz. (h) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | PR-27 | Wdróż API na VPS i sprawdź procedurę aktualizacji | DevOps | @Amadeuszzyla | PR-2, PR-4 | M | 10 | — |
-| PR-28 | Skonfiguruj kopie zapasowe i sprawdź odtworzenie danych | DevOps | @Amadeuszzyla | PR-27, PR-28 | M | 8 | — |
-| PR-29 | Przygotuj dane demonstracyjne i wyniki referencyjne | QA / backend | @AdrianJurak | PR-21, PR-25, PR-27 | M | 8 | — |
-| PR-30 | Zmierz i popraw wydajność API | backend / wydajność | @AdrianJurak | PR-21, PR-25, PR-28, PR-30 | M | 8 | — |
-| PR-31 | Sprawdź wydajność i dostępność aplikacji Android | mobile / jakość | @Amadeuszzyla | PR-13, PR-22, PR-23, PR-26, PR-30 | M | 8 | — |
-| PR-32 | Przeprowadź odbiór integracyjny aplikacji, API i panelu | QA | @KirilRyab | PR-3, PR-12, PR-13, PR-17, PR-20, PR-22, PR-23, PR-24, PR-26, PR-28, PR-29, PR-30, PR-31, PR-32, PR-36 | L | 16 | — |
-| PR-33 | Uzupełnij dokumentację i opracuj sprawozdanie | dokumentacja | @Amadeuszzyla | PR-7, PR-29, PR-31, PR-32, PR-33 | M | 12 | — |
-| PR-34 | Udostępnij APK i przeprowadź demonstrację projektu | wydanie / odbiór | @KirilRyab | PR-33, PR-34 | M | 8 | — |
+| PR-28 | Skonfiguruj kopie zapasowe i sprawdź odtworzenie danych | DevOps | @Amadeuszzyla | PR-10, PR-27 | M | 8 | — |
+| PR-29 | Przygotuj dane demonstracyjne i wyniki referencyjne | QA / backend | @Amadeuszzyla | PR-10, PR-21, PR-25 | M | 8 | — |
+| PR-30 | Zmierz i popraw wydajność API | backend / wydajność | @AdrianJurak | PR-21, PR-25, PR-27, PR-29 | M | 8 | — |
+| PR-31 | Sprawdź wydajność i dostępność aplikacji Android | mobile / jakość | @KirilRyab | PR-13, PR-22, PR-23, PR-26, PR-29 | M | 8 | — |
+| PR-32 | Przeprowadź odbiór integracyjny aplikacji, API i panelu | QA | @Amadeuszzyla | PR-3, PR-12, PR-13, PR-17, PR-20, PR-22, PR-23, PR-24, PR-26, PR-27, PR-28, PR-29, PR-30, PR-31, PR-35 | L | 16 | — |
+| PR-33 | Uzupełnij dokumentację i opracuj sprawozdanie | dokumentacja | @Amadeuszzyla | PR-7, PR-28, PR-30, PR-31, PR-32 | M | 12 | — |
+| PR-34 | Udostępnij APK i przeprowadź demonstrację projektu | wydanie / odbiór | @Amadeuszzyla | PR-32, PR-33 | M | 8 | — |
 
 ## Szczegółowe opisy Issues
 
@@ -258,7 +258,7 @@ Przygotować aplikację do rozwijania ekranów. Weryfikować aplikację przed sc
 
 ### PR-4 — Zdefiniuj kontrakt OpenAPI i skonfiguruj CI backendu
 
-**Właściciel:** @AdrianJurak  
+**Właściciel:** @Amadeuszzyla  
 **Obszar:** dokumentacja / API / CI / backend  
 **Zależy od:** PR-1, PR-2  
 **Rozmiar:** M  
@@ -287,7 +287,7 @@ Umożliwić równoległe tworzenie backendu i aplikacji. Blokować scalanie zmia
 
 ### PR-5 — Wybierz i zweryfikuj dostawców usług mapowych
 
-**Właściciel:** @AdrianJurak  
+**Właściciel:** @Amadeuszzyla  
 **Obszar:** analiza / integracje  
 **Zależy od:** PR-1  
 **Rozmiar:** M  
@@ -311,7 +311,7 @@ Wybrać wykonalne integracje przed implementacją map.
 
 ### PR-6 — Dodaj motyw MilesAway i nawigację aplikacji
 
-**Właściciel:** @Amadeuszzyla  
+**Właściciel:** @KirilRyab  
 **Obszar:** mobile / UI  
 **Zależy od:** PR-3  
 **Rozmiar:** M  
@@ -420,13 +420,13 @@ Potwierdzać własność adresu przed dostępem do danych. Umożliwić odzyskani
 - [ ] Ważny token zmienia hasło raz; wygasły/użyty jest odrzucany.
 - [ ] Stare hasło, tokeny i sesje przestają działać; nowe hasło pozwala zalogować aktywne konto.
 
-### PR-10 — Udostępnij edycję profilu i ustawienia prywatności w API
+### PR-10 — Udostępnij edycję profilu, ustawienia prywatności i usuwanie konta w API
 
 **Właściciel:** @AdrianJurak  
 **Obszar:** backend  
 **Zależy od:** PR-8, PR-9  
 **Rozmiar:** L  
-**Szacunek:** 12 h  
+**Szacunek:** 14 h  
 **Czas rzeczywisty:** — h
 
 #### Kontekst i cel
@@ -510,9 +510,9 @@ Udostępnić obsługę kont w aplikacji. Zamknąć ścieżki e-mailowe w aplikac
 
 ### PR-13 — Dodaj ustawienia profilu i usuwanie konta w aplikacji
 
-**Właściciel:** @Amadeuszzyla  
+**Właściciel:** @KirilRyab  
 **Obszar:** mobile  
-**Zależy od:** PR-6, PR-10, PR-11, PR-27  
+**Zależy od:** PR-6, PR-10, PR-11  
 **Rozmiar:** M  
 **Szacunek:** 8 h  
 **Czas rzeczywisty:** — h
@@ -728,7 +728,7 @@ Obliczać szacunkowy dystans bez routingu drogowego. Wyznaczać wiarygodną drog
 
 ### PR-20 — Wyświetl podróż na mapie i rozróżnij środki transportu
 
-**Właściciel:** @Amadeuszzyla  
+**Właściciel:** @KirilRyab  
 **Obszar:** mobile  
 **Zależy od:** PR-5, PR-6, PR-16, PR-19  
 **Rozmiar:** L  
@@ -786,7 +786,7 @@ Udostępnić komplet historii i kraje z wizyt. Wyliczać komplet metryk PDF wed�
 
 ### PR-22 — Wyświetl historię podróży i odwiedzone kraje na mapie
 
-**Właściciel:** @Amadeuszzyla  
+**Właściciel:** @KirilRyab  
 **Obszar:** mobile  
 **Zależy od:** PR-20, PR-21  
 **Rozmiar:** L  
@@ -800,13 +800,15 @@ Pozwolić przeglądać wieloletnią historię.
 #### Wymagania techniczne
 
 - Dodaj widoki ostatniej podróży, roku i całej historii, pobieranie stron oraz grupowanie markerów.
-- Wyróżniaj rzeczywiste poligony krajów wraz z wyspami; obsłużyć mapowanie kodów i atrybucje.
+- Wyróżniaj rzeczywiste poligony krajów wraz z wyspami, używając źródła granic wybranego w PR-5; obsłużyć mapowanie kodów, licencję i atrybucje.
+- Uprość geometrię i zapisz ją w pamięci podręcznej tak, aby pełny zestaw odwiedzonych krajów renderował się płynnie.
 
 #### Kryteria akceptacji
 
 - [ ] Historia większa niż strona API jest kompletna; można wybrać podróż i jej szczegóły.
 - [ ] Ostatnia podróż wynika z daty zakończenia, potem dodania i stabilnego ID.
 - [ ] Filtr roku aktualizuje mapę i kraje; państwa nie są zastąpione przybliżonymi plamami.
+- [ ] Kraje wielokawałkowe i wyspy są wyróżnione poprawnie; źródło, licencja i atrybucja granic są opisane.
 
 ### PR-23 — Dodaj ekran statystyk z filtrem roku
 
@@ -858,7 +860,7 @@ Oddzielić administrację kontami od funkcji podróżniczych. Umożliwić admini
 
 - [ ] Admin loguje się do panelu; zwykłe konto nie otwiera panelu ani bezpośrednich akcji.
 - [ ] Publiczna rejestracja nie tworzy administratora.
-- [ ] Zasoby podróży i miejsc dodaje PR-36; PR-24 dostarcza dostęp sesyjny i politykę dostępu z testami dostępu i odmowy.
+- [ ] Zasoby podróży i miejsc dodaje PR-35; PR-24 dostarcza dostęp sesyjny i politykę dostępu z testami dostępu i odmowy.
 - [ ] Admin wyszukuje konto i zmienia dozwolone dane; konflikt unikalności nie niszczy zapisu.
 - [ ] Panel nie pokazuje hashów ani tokenów.
 - [ ] Testy akcji potwierdzają uprawnienia i audyt; nadawanie ról, wymuszanie hasła i usuwanie cudzych kont nie są dostępne.
@@ -944,7 +946,7 @@ Sprawdzić środowisko produkcyjne przed zakończeniem funkcji.
 
 **Właściciel:** @Amadeuszzyla  
 **Obszar:** DevOps  
-**Zależy od:** PR-27, PR-28  
+**Zależy od:** PR-10, PR-27  
 **Rozmiar:** M  
 **Szacunek:** 8 h  
 **Czas rzeczywisty:** — h
@@ -966,9 +968,9 @@ Sprawdzić odzyskiwanie danych bez przywracania usuniętych kont.
 
 ### PR-29 — Przygotuj dane demonstracyjne i wyniki referencyjne
 
-**Właściciel:** @AdrianJurak  
+**Właściciel:** @Amadeuszzyla  
 **Obszar:** QA / backend  
-**Zależy od:** PR-21, PR-25, PR-27  
+**Zależy od:** PR-10, PR-21, PR-25  
 **Rozmiar:** M  
 **Szacunek:** 8 h  
 **Czas rzeczywisty:** — h
@@ -992,7 +994,7 @@ Zapewnić powtarzalną podstawę testów i demonstracji.
 
 **Właściciel:** @AdrianJurak  
 **Obszar:** backend / wydajność  
-**Zależy od:** PR-21, PR-25, PR-28, PR-30  
+**Zależy od:** PR-21, PR-25, PR-27, PR-29  
 **Rozmiar:** M  
 **Szacunek:** 8 h  
 **Czas rzeczywisty:** — h
@@ -1014,9 +1016,9 @@ Zachować sprawność wieloletniej historii.
 
 ### PR-31 — Sprawdź wydajność i dostępność aplikacji Android
 
-**Właściciel:** @Amadeuszzyla  
+**Właściciel:** @KirilRyab  
 **Obszar:** mobile / jakość  
-**Zależy od:** PR-13, PR-22, PR-23, PR-26, PR-30  
+**Zależy od:** PR-13, PR-22, PR-23, PR-26, PR-29  
 **Rozmiar:** M  
 **Szacunek:** 8 h  
 **Czas rzeczywisty:** — h
@@ -1038,9 +1040,9 @@ Utrzymać czytelność i płynność na docelowym telefonie.
 
 ### PR-32 — Przeprowadź odbiór integracyjny aplikacji, API i panelu
 
-**Właściciel:** @KirilRyab  
+**Właściciel:** @Amadeuszzyla  
 **Obszar:** QA  
-**Zależy od:** PR-3, PR-12, PR-13, PR-17, PR-20, PR-22, PR-23, PR-24, PR-26, PR-28, PR-29, PR-30, PR-31, PR-32, PR-36  
+**Zależy od:** PR-3, PR-12, PR-13, PR-17, PR-20, PR-22, PR-23, PR-24, PR-26, PR-27, PR-28, PR-29, PR-30, PR-31, PR-35  
 **Rozmiar:** L  
 **Szacunek:** 16 h  
 **Czas rzeczywisty:** — h
@@ -1064,7 +1066,7 @@ Potwierdzić działanie całego systemu i wymagania PDF.
 
 **Właściciel:** @Amadeuszzyla  
 **Obszar:** dokumentacja  
-**Zależy od:** PR-7, PR-29, PR-31, PR-32, PR-33  
+**Zależy od:** PR-7, PR-28, PR-30, PR-31, PR-32  
 **Rozmiar:** M  
 **Szacunek:** 12 h  
 **Czas rzeczywisty:** — h
@@ -1086,9 +1088,9 @@ Opisać rzeczywiście dostarczony system i sposób jego utrzymania.
 
 ### PR-34 — Udostępnij APK i przeprowadź demonstrację projektu
 
-**Właściciel:** @KirilRyab  
+**Właściciel:** @Amadeuszzyla  
 **Obszar:** wydanie / odbiór  
-**Zależy od:** PR-33, PR-34  
+**Zależy od:** PR-32, PR-33  
 **Rozmiar:** M  
 **Szacunek:** 8 h  
 **Czas rzeczywisty:** — h
@@ -1129,10 +1131,12 @@ Umożliwić administratorowi kontrolę danych używanych przez aplikację mobiln
 - Audytuj autora, czas, powód, ID podróży i właściciela, bez danych wrażliwych.
 - Po usunięciu unieważnij cache publicznych profili i statystyk właściciela; ogranicz zasoby do roli administratora.
 - Użyj eager loading, aby listy nie generowały zapytań N+1.
+- Pokazuj także podróże prywatnych profili, wyłącznie administratorowi w panelu; nie udostępniaj tych danych przez API. Brak edycji treści podróży jest świadomą decyzją opisaną w regułach domeny.
 
 #### Kryteria akceptacji
 
-- [ ] Admin przegląda podróże i miejsca; panel nie oferuje tworzenia ani edycji; zwykłe konto nie ma dostępu, także bezpośrednio.
+- [ ] Admin przegląda podróże i miejsca, także prywatnych profili; panel nie oferuje tworzenia ani edycji; zwykłe konto nie ma dostępu, także bezpośrednio.
+- [ ] Prywatna podróż pozostaje niedostępna dla innych użytkowników przez API.
 - [ ] Wyszukiwanie, filtry i paginacja działają; test liczby zapytań potwierdza brak N+1.
 - [ ] Usunięcie bez powodu lub potwierdzenia jest niemożliwe.
 - [ ] Po usunięciu podróż znika z API, mapy historii, profilu publicznego i statystyk przy następnym żądaniu; inne podróże i konto użytkownika pozostają bez zmian.
@@ -1159,8 +1163,9 @@ Umożliwić administratorowi kontrolę danych używanych przez aplikację mobiln
 | Kilometry łącznie i według transportu | PR-19, PR-21, PR-23 | Suma per transport odpowiada sumie znanych dystansów; null nie jest zerem. |
 | Liczba odwiedzonych miejsc, także poza miastami | PR-14, PR-18, PR-21, PR-23 | Dwie wizyty w tej samej górze dają jedno miejsce, dwa obiekty w mieście dają dwa. |
 | Statystyki całej historii i roku | PR-21, PR-23 | Filtry stosują daty podróży/wizyt/odcinków zgodnie z regułami. |
+| Kontrola dostępu po stronie API | PR-8, PR-10, PR-14, PR-25 | Cudze ID, prywatny profil i zbanowane konto są odrzucane przy każdym żądaniu, także przy cache. |
 | Zarządzanie kontami i bany | PR-24 | Edycja dozwolonych danych, ban/unban i audyt. |
-| Panel: podgląd danych i moderacja | PR-36 | Podgląd podróży i miejsc tylko do odczytu; usunięcie podróży z powodem i audytem; podróż znika z API, map i statystyk. |
-| Usunięcie konta | PR-27, PR-13, PR-29 | Usunięcie kaskadowe i brak powrotu konta po odtworzeniu starej kopii. |
+| Panel: podgląd danych i moderacja | PR-35 | Podgląd podróży i miejsc tylko do odczytu; usunięcie podróży z powodem i audytem; podróż znika z API, map i statystyk. |
+| Usunięcie konta | PR-10, PR-13, PR-28 | Usunięcie kaskadowe i brak powrotu konta po odtworzeniu starej kopii. |
 | Usługi zewnętrzne | PR-5, PR-18, PR-19, PR-20 | Smoke test wybranych usług i prawidłowe atrybucje. |
-| Działający, czytelny system | PR-4, PR-3, PR-6, PR-28, PR-29, PR-30, PR-31, PR-32, PR-33, PR-34, PR-35 | CI, pomiary, odbiór release APK, instrukcje i demonstracja. |
+| Działający, czytelny system | PR-3, PR-4, PR-6, PR-27, PR-28, PR-29, PR-30, PR-31, PR-32, PR-33, PR-34 | CI, pomiary, odbiór release APK, instrukcje i demonstracja. |
