@@ -1,3 +1,4 @@
+import 'package:miles_away/core/widgets/app_state_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:miles_away/app/app.dart';
@@ -66,5 +67,66 @@ void main() {
 
     expect(find.text('MilesAway'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('AppStateView displays loading state', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(body: AppStateView(type: AppStateType.loading)),
+      ),
+    );
+
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
+
+  testWidgets('AppStateView displays empty state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(body: AppStateView(type: AppStateType.empty)),
+      ),
+    );
+
+    expect(find.text('Tutaj jeszcze nic nie ma'), findsOneWidget);
+  });
+
+  testWidgets('AppStateView displays error state and retry button', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: AppStateView(type: AppStateType.error, onRetry: () {}),
+        ),
+      ),
+    );
+
+    expect(find.text('Coś poszło nie tak'), findsOneWidget);
+    expect(find.text('Spróbuj ponownie'), findsOneWidget);
+  });
+
+  testWidgets('AppStateView retry button calls callback', (
+    WidgetTester tester,
+  ) async {
+    var retryCalled = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: AppStateView(
+            type: AppStateType.error,
+            onRetry: () {
+              retryCalled = true;
+            },
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Spróbuj ponownie'));
+    await tester.pump();
+
+    expect(retryCalled, isTrue);
   });
 }
