@@ -25,6 +25,7 @@ class AppTheme {
         foregroundColor: AppColors.brownDark,
         elevation: 0,
         centerTitle: false,
+        scrolledUnderElevation: 0,
       ),
 
       cardTheme: CardThemeData(
@@ -35,6 +36,46 @@ class AppTheme {
           borderRadius: BorderRadius.circular(20),
           side: const BorderSide(color: AppColors.divider),
         ),
+      ),
+
+      chipTheme: ChipThemeData(
+        backgroundColor: AppColors.surface,
+        selectedColor: AppColors.green,
+        secondarySelectedColor: AppColors.greenDark,
+        disabledColor: AppColors.surfaceSecondary,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        labelStyle: const TextStyle(
+          color: AppColors.textPrimary,
+          fontSize: 13,
+          fontWeight: FontWeight.w500,
+        ),
+        secondaryLabelStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(color: AppColors.divider),
+        ),
+        elevation: 0,
+        pressElevation: 0,
+      ),
+
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return Colors.white;
+          }
+          return AppColors.textSecondary;
+        }),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.green;
+          }
+          return AppColors.surfaceSecondary;
+        }),
+        trackOutlineColor: WidgetStateProperty.all(AppColors.divider),
       ),
 
       navigationBarTheme: NavigationBarThemeData(
@@ -66,14 +107,36 @@ class AppTheme {
         ),
       ),
 
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.greenDark,
+          side: const BorderSide(color: AppColors.green),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+        ),
+      ),
+
+      listTileTheme: const ListTileThemeData(
+        iconColor: AppColors.green,
+        textColor: AppColors.brownDark,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      ),
+
       textTheme: const TextTheme(
         headlineMedium: TextStyle(
           color: AppColors.brownDark,
           fontWeight: FontWeight.bold,
+          letterSpacing: -0.5,
         ),
         titleLarge: TextStyle(
           color: AppColors.brownDark,
           fontWeight: FontWeight.w700,
+        ),
+        titleMedium: TextStyle(
+          color: AppColors.brownDark,
+          fontWeight: FontWeight.w600,
         ),
         bodyLarge: TextStyle(color: AppColors.textPrimary),
         bodyMedium: TextStyle(color: AppColors.textSecondary),
