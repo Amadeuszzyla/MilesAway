@@ -1,3 +1,5 @@
+import 'package:miles_away/core/widgets/app_state_view.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:miles_away/app/app.dart';
 
@@ -6,5 +8,125 @@ void main() {
     await tester.pumpWidget(const MilesAwayApp());
 
     expect(find.text('MilesAway'), findsOneWidget);
+    expect(find.text('Moje podróże'), findsOneWidget);
+  });
+
+  testWidgets('Bottom navigation switches between screens', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MilesAwayApp());
+
+    await tester.tap(find.text('Mapa'));
+    await tester.pumpAndSettle();
+    expect(find.text('Mapa podróży'), findsOneWidget);
+
+    await tester.tap(find.text('Statystyki').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Statystyki').first, findsOneWidget);
+
+    await tester.tap(find.text('Profil').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Profil').first, findsOneWidget);
+
+    await tester.tap(find.text('Konto').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Konto').first, findsOneWidget);
+
+    await tester.tap(find.text('Podróże'));
+    await tester.pumpAndSettle();
+    expect(find.text('Moje podróże'), findsOneWidget);
+  });
+
+  testWidgets('User can open and close a details screen', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MilesAwayApp());
+
+    await tester.ensureVisible(find.text('Otwórz szczegóły'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Otwórz szczegóły'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Szczegóły'), findsOneWidget);
+
+    await tester.tap(find.text('Wróć'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Moje podróże'), findsOneWidget);
+  });
+
+  testWidgets('App works on a small screen', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(360, 640);
+    tester.view.devicePixelRatio = 1;
+
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(const MilesAwayApp());
+
+    expect(find.text('MilesAway'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('AppStateView displays loading state', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(body: AppStateView(type: AppStateType.loading)),
+      ),
+    );
+
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
+
+  testWidgets('AppStateView displays empty state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(body: AppStateView(type: AppStateType.empty)),
+      ),
+    );
+
+    expect(find.text('Tutaj jeszcze nic nie ma'), findsOneWidget);
+  });
+
+  testWidgets('AppStateView displays error state and retry button', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: AppStateView(type: AppStateType.error, onRetry: () {}),
+        ),
+      ),
+    );
+
+    expect(find.text('Coś poszło nie tak'), findsOneWidget);
+    expect(find.text('Spróbuj ponownie'), findsOneWidget);
+  });
+
+  testWidgets('AppStateView retry button calls callback', (
+    WidgetTester tester,
+  ) async {
+    var retryCalled = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: AppStateView(
+            type: AppStateType.error,
+            onRetry: () {
+              retryCalled = true;
+            },
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Spróbuj ponownie'));
+    await tester.pump();
+
+    expect(retryCalled, isTrue);
   });
 }

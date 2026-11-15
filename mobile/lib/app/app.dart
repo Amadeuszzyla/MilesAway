@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../features/navigation/main_navigation.dart';
+import '../core/theme/app_theme.dart';
+
 class MilesAwayApp extends StatelessWidget {
   const MilesAwayApp({super.key});
 
@@ -8,11 +11,8 @@ class MilesAwayApp extends StatelessWidget {
     return MaterialApp(
       title: 'MilesAway',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        useMaterial3: true,
-      ),
-      home: const Scaffold(body: Center(child: Text('MilesAway'))),
+      theme: AppTheme.light,
+      home: const MainNavigation(),
     );
   }
 }
